@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: flask-esp32-app
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python app.py"
+    instances: 1
+    region: us
+    autoDeploy: true
+    envVars:
+      - key: FLASK_APP
+        value: "app.py"
+      - key: FLASK_ENV
+        value: "production"
