@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Sensor Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="sensor-data">
+            <h2>Sensor Data</h2>
+            <div class="data">
+                <div>Temperature: <span id="temp">--</span> °C</div>
+                <div>Humidity: <span id="humidity">--</span> %</div>
+                <div>Light Intensity: <span id="light">--</span> lux</div>
+            </div>
+            <div id="health-status">--</div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="sensor-chart"></canvas>
+        </div>
+
+        <div id="3d-plot"></div>
+
+        <!-- Chatbox and Measure Data Button -->
+        <div class="interaction-container">
+            <!-- Chatbox -->
+            <textarea id="chatbox" placeholder="ChatGPT's response will appear here..." readonly></textarea>
+            
+            <!-- Search bar for ChatGPT interaction -->
+            <input
+                type="text"
+                id="user-input"
+                placeholder="Ask ChatGPT anything about the plant's health or data..."
+            />
+            
+            <!-- Measure Data Button -->
+            <button id="measure-data-button" class="button">
+                Measure Data
+                <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
