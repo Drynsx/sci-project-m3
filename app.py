@@ -21,5 +21,5 @@ def update_data():
     return jsonify({"message": "Data received successfully"}), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
-
+    # No need to specify the host and port for Render
+    app.run()
