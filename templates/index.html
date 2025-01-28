@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plant Sensor Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+
+    <!-- Link to the CSS file in the static folder -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <!-- External Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
@@ -47,6 +51,8 @@
             </button>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Link to the JavaScript file in the static folder -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

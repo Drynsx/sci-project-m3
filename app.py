@@ -12,22 +12,28 @@ def index():
 def update_data():
     data = request.json
     if not data:
-        return jsonify({"error": "No data provided"}), 400
+        return jsonify({"error": "No data provided"}), 400  # Return error if no data is provided
 
+    # Extract data from the JSON payload
     temperature = data.get('temperature')
     humidity = data.get('humidity')
     light = data.get('light')
+
+    # Check if all required data fields are present
+    if temperature is None or humidity is None or light is None:
+        return jsonify({"error": "Missing data fields"}), 400
 
     # Print the received data for debugging
     print(f"Received data - Temperature: {temperature}, Humidity: {humidity}, Light: {light}")
     
     # You can store the data in a global variable or a database here if needed
-    return jsonify({"message": "Data received successfully"}), 200
+
+    return jsonify({"message": "Data received successfully"}), 200  # Acknowledge successful reception of data
 
 # Endpoint to serve the data to be fetched by the client (GET method)
 @app.route('/data', methods=['GET'])
 def get_data():
-    # Here you should return actual sensor data, for now, returning dummy values
+    # Here you should return actual sensor data; for now, returning dummy values
     # Replace this with actual data if required (e.g., from a database or in-memory storage)
     temperature = 25.0  # Dummy data
     humidity = 60.0     # Dummy data
