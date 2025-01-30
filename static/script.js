@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Flask server URL (Uses relative URL to avoid local network issues)
     const flaskUrl = "/data";
-    const chatGPTApiUrl = "/chatgpt";
 
     // Handle button click for measuring sensor data
     measureDataButton.addEventListener("click", async () => {
@@ -19,13 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
             displaySensorData(data);
             const healthStatus = analyzePlantHealth(data);
             document.getElementById("health-status").innerText = healthStatus;
-
-            // Auto-send data summary to ChatGPT
-            const autoMessage = `The current sensor data is: Temperature ${data.temperature}°C, Humidity ${data.humidity}%, and Light Intensity ${data.light} lux. What can you tell me about the plant's health?`;
-            await sendMessageToChatGPT(autoMessage);
         } catch (error) {
             console.error("❌ Error fetching data:", error);
-            appendToChatbox("ChatGPT", "Error: Unable to fetch data. Please check the connection.");
+            appendToChatbox("Error: Unable to fetch data. Please check the connection.");
         }
     });
 
@@ -57,40 +52,19 @@ document.addEventListener("DOMContentLoaded", () => {
         return "✅ The plant is healthy.";
     }
 
-    // Append messages to the chatbox
-    function appendToChatbox(sender, message) {
-        chatbox.value += `${sender}: ${message}\n\n`;
+    // Append messages to the chatbox (if you still want a log of the health status or errors)
+    function appendToChatbox(message) {
+        chatbox.value += `${message}\n\n`;
         chatbox.scrollTop = chatbox.scrollHeight;
     }
 
-    // Send user message to ChatGPT via Flask
-    async function sendMessageToChatGPT(message) {
-        appendToChatbox("You", message);
-
-        try {
-            const response = await fetch(chatGPTApiUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message }),
-            });
-
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-            const data = await response.json();
-            appendToChatbox("ChatGPT", data.reply);
-        } catch (error) {
-            console.error("❌ ChatGPT fetch error:", error);
-            appendToChatbox("ChatGPT", "Error: Unable to connect to ChatGPT API.");
-        }
-    }
-
-    // Handle user input via Enter key
+    // Handle user input via Enter key (removed ChatGPT functionality)
     userInput.addEventListener("keydown", async (event) => {
         if (event.key === "Enter") {
             const userMessage = userInput.value.trim();
             if (!userMessage) return;
 
-            await sendMessageToChatGPT(userMessage);
+            appendToChatbox("You: " + userMessage);
             userInput.value = ""; // Clear the input field
         }
     });
