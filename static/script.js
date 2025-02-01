@@ -46,10 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Analyze plant health based on sensor data
     function analyzePlantHealth(data) {
-        if (data.temperature < 18 || data.temperature > 30) return "⚠️ Warning: Temperature out of range!";
-        if (data.humidity < 40 || data.humidity > 70) return "⚠️ Warning: Humidity out of range!";
-        if (data.light < 200) return "⚠️ Warning: Low light intensity!";
+        if (data.temperature < 18 || data.temperature > 37) return "⚠️ Warning: Temperature out of range! It should stays in 18-30 celsius!";
+        if (data.humidity < 50 || data.humidity > 80) return "⚠️ Warning: Humidity out of range! It should stays in 50%-80%";
+        if (data.light < 950 || data.light > 7000) return "⚠️ Warning: Light out of range! It should stays in 950 - 7000";
         return "✅ The plant is healthy.";
+        
     }
 
     // Append messages to the chatbox (if you still want a log of the health status or errors)
