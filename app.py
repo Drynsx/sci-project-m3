@@ -1,6 +1,5 @@
 import os
 import requests
-import openai
 from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
@@ -10,11 +9,6 @@ ESP32_LOCAL_URL = "http://192.168.4.2:5000/data"
 
 # Store latest received data
 latest_data = {}
-
-# Load OpenAI API Key from environment variables (DO NOT hardcode API key)
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-openai.api_key = OPENAI_API_KEY  # Set API key globally
-
 
 @app.route("/")
 def index():
@@ -54,34 +48,6 @@ def send_data():
         return jsonify(latest_data)
     else:
         return jsonify({"error": "No sensor data available"}), 404
-
-
-@app.route("/chatgpt", methods=["POST"])
-def chatgpt():
-    """Handles ChatGPT API requests securely."""
-    if not OPENAI_API_KEY:
-        return jsonify({"reply": "❌ Error: OpenAI API key is missing!"}), 500
-
-    data = request.get_json()
-    user_message = data.get("message", "")
-
-    if not user_message:
-        return jsonify({"reply": "⚠️ Error: Empty message received."}), 400
-
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4-turbo",  # Use "gpt-3.5-turbo" if needed
-            messages=[{"role": "user", "content": user_message}],
-            temperature=0.7,
-        )
-        return jsonify({"reply": response["choices"][0]["message"]["content"]})
-
-    except openai.error.OpenAIError as e:
-        print(f"❌ ChatGPT API Error: {str(e)}")
-        return jsonify({"reply": f"Error calling ChatGPT API: {str(e)}"}), 500
-    except Exception as e:
-        print(f"❌ Unexpected Error: {str(e)}")
-        return jsonify({"reply": "An unexpected error occurred."}), 500
 
 
 # Enable dynamic port for Render
